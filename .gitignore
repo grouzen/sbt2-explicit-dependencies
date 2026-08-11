@@ -3,3 +3,4 @@
 .metals
 .vscode
 metals.sbt
+.bsp
