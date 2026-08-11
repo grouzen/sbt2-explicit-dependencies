@@ -15,4 +15,4 @@ jobs:
           java-version: '21'
       - uses: sbt/setup-sbt@v1
       - name: Compile, unit test, scripted test, and validate publishing metadata
-        run: sbt -batch compile testFull scripted publishLocal
+        run: sbt -batch "; compile; testFull; scripted; publishLocal"
