@@ -24,6 +24,6 @@
 
 ## Impact
 
-- Adds the plugin source, sbt 2/Scala 3 build definition, tests, documentation, and CI/publishing configuration to this repository.
+- Adds the plugin source, sbt 2/Scala 3 build definition, tests, documentation, and CI/publishing configuration to this repository, including all applicable upstream scripted scenarios.
 - Uses sbt's compiler analysis and classpath module metadata; compiler analysis remains an internal sbt API and will require compatibility testing against supported sbt 2 releases.
 - Preserves the original task names and user-facing behavior, while the plugin artifact coordinates and repository identity are new.

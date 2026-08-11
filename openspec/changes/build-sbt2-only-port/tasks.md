@@ -22,13 +22,15 @@
 
 ## 4. sbt 2 integration verification
 
-- [ ] 4.1 Port existing scripted scenarios for undeclared, unused, filter, Java, compiler-plugin, classifier, multi-module, and configuration behavior to sbt 2.
-- [ ] 4.2 Add scripted coverage proving a used transitive artifact is identified through metadata-first classpath mapping.
-- [ ] 4.3 Add scripted coverage for Coursier/virtual-file path conversion and Scala 3 project sources.
-- [ ] 4.4 Run the full scripted suite against the selected sbt 2 baseline and fix behavioral regressions.
+- [x] 4.1 Port existing scripted scenarios for undeclared, unused, filter, Java, compiler-plugin, classifier, multi-module, and configuration behavior to sbt 2. (Compiler-plugin scenario intentionally omitted: kind-projector is unsupported on Scala 3.)
+- [x] 4.2 Add scripted coverage proving a used transitive artifact is identified through metadata-first classpath mapping.
+- [x] 4.3 Add scripted coverage for Coursier/virtual-file path conversion and Scala 3 project sources.
+- [x] 4.4 Run the full scripted suite against the selected sbt 2 baseline and fix behavioral regressions.
+- [x] 4.5 Port the remaining applicable upstream scripted scenarios: full Scala-version cross-versioning, Scala-library exclusion, provided/optional declarations, and Coursier resolution; replace sbt 1-only cases with equivalent Scala 3 coverage.
+- [x] 4.6 Run the expanded scripted suite against sbt 2.0.4 and address regressions.
 
 ## 5. Documentation and delivery
 
-- [ ] 5.1 Update installation and usage documentation for new sbt 2-only coordinates, retained task names, filters, and compile-time limitations.
-- [ ] 5.2 Document the supported sbt 2 baseline and the maintenance implication of relying on Zinc's internal analysis API.
-- [ ] 5.3 Update CI to compile and run scripted tests on the supported sbt 2 version and validate publishing metadata.
+- [x] 5.1 Update installation and usage documentation for new sbt 2-only coordinates, retained task names, filters, and compile-time limitations.
+- [x] 5.2 Document the supported sbt 2 baseline and the maintenance implication of relying on Zinc's internal analysis API.
+- [x] 5.3 Update CI to compile and run scripted tests on the supported sbt 2 version and validate publishing metadata.

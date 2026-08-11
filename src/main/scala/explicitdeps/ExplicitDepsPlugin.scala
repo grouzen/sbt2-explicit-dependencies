@@ -12,7 +12,12 @@ import sbt.Keys.*
 import sbt.librarymanagement.{DependencyFilter, ModuleFilter}
 
 object ExplicitDepsPlugin extends AutoPlugin:
-  object autoImport:
+  trait Implicits:
+    implicit val moduleFilterRemoveValue: Remove.Value[ModuleFilter, ModuleFilter] =
+      new Remove.Value[ModuleFilter, ModuleFilter]:
+        override def removeValue(a: ModuleFilter, b: ModuleFilter): ModuleFilter = a - b
+
+  object autoImport extends Implicits:
     val undeclaredCompileDependencies = taskKey[Set[Dependency]]("Find Compile libraries used but not directly declared.")
     val undeclaredCompileDependenciesTest = taskKey[Unit]("Fail when Compile dependencies are undeclared.")
     val undeclaredCompileDependenciesFilter = settingKey[ModuleFilter]("Filter undeclared dependencies.")
@@ -52,7 +57,7 @@ object ExplicitDepsPlugin extends AutoPlugin:
     }.toMap
     analysis.relations.allLibraryDeps.flatMap { ref =>
       val path = converter.toPath(ref).normalize
-      modulesByPath.get(path).map(module => Dependency(module.organization, module.name, module.revision, module.crossVersion.isInstanceOf[sbt.librarymanagement.Binary | sbt.librarymanagement.Full])) match
+      modulesByPath.get(path).map(module => dependencyFromModule(module, scala)) match
         case some @ Some(_) => some
         case None =>
           BoringStuff.jarFileToDependency(scala, log)(path.toFile).orElse {
@@ -62,6 +67,12 @@ object ExplicitDepsPlugin extends AutoPlugin:
     }.filterNot(dep => Set("scala-library", "scalajs-library", "scala3-library").contains(dep.name)).toSet
   }
 
+  private def dependencyFromModule(module: sbt.librarymanagement.ModuleID, scala: explicitdeps.ScalaVersion): Dependency =
+    val binarySuffix = s"_${scala.binary}"
+    val fullSuffix = s"_${scala.full}"
+    if module.name.endsWith(binarySuffix) then Dependency(module.organization, module.name.stripSuffix(binarySuffix), module.revision, true)
+    else if module.name.endsWith(fullSuffix) then Dependency(module.organization, module.name.stripSuffix(fullSuffix), module.revision, true)
+    else Dependency(module.organization, module.name, module.revision, module.crossVersion.isInstanceOf[sbt.librarymanagement.Binary | sbt.librarymanagement.Full])
 object UndeclaredCompileDependenciesException extends FeedbackProvidedException:
   override def toString = "Failing the build because undeclared dependencies were found"
 object UnusedCompileDependenciesException extends FeedbackProvidedException:

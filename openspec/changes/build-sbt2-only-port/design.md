@@ -117,6 +117,12 @@ plugin auto-import surface. Add an explicit Scala XML dependency only if the
 POM/Ivy fallback stays XML-based; replacing the fallback parser is permitted
 provided its recovery behavior remains.
 
+The scripted suite SHALL retain every upstream scenario that can run on the
+selected sbt 2 / Scala 3 baseline. sbt 1-only cross-build and obsolete
+ScalaJS/Dotty-plugin cases SHALL be replaced by equivalent Scala 3 coverage;
+the unsupported kind-projector compiler-plugin fixture is intentionally not
+ported.
+
 ## Risks / Trade-offs
 
 - [Zinc analysis is an internal sbt API] → Pin and document a supported sbt 2
