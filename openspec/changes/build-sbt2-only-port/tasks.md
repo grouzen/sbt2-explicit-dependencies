@@ -1,24 +1,24 @@
 ## 1. Repository and sbt 2 build foundation
 
-- [ ] 1.1 Establish the independent project identity, retain the upstream Apache-2.0 license, and add durable README/source attribution and modification notices.
-- [ ] 1.2 Create the sbt 2-only plugin build using Scala 3, supported publishing/release tooling, and new plugin coordinates.
-- [ ] 1.3 Port the upstream source layout and public auto-import task/settings surface to Scala 3 and slash-scoped sbt syntax.
-- [ ] 1.4 Make the result and failure diagnostic tasks uncached for sbt 2 task evaluation.
+- [x] 1.1 Establish the independent project identity, retain the upstream Apache-2.0 license, and add durable README/source attribution and modification notices.
+- [x] 1.2 Create the sbt 2-only plugin build using Scala 3, supported publishing/release tooling, and new plugin coordinates.
+- [x] 1.3 Port the upstream source layout and public auto-import task/settings surface to Scala 3 and slash-scoped sbt syntax.
+- [x] 1.4 Make the result and failure diagnostic tasks uncached for sbt 2 task evaluation.
 
 ## 2. Used-artifact to module mapping
 
-- [ ] 2.1 Verify the selected sbt 2 baseline's API for Compile external-classpath entries and their attached module metadata with a focused compile/test spike.
-- [ ] 2.2 Replace the upstream reflective virtual-file and Coursier-cache conversion with `fileConverter`-based conversion of Zinc `allLibraryDeps` entries.
-- [ ] 2.3 Build a normalized Compile classpath artifact-path-to-module index that retains organization, module name, resolved revision, and cross-version information.
-- [ ] 2.4 Map Zinc-used artifact paths through the classpath metadata index before constructing dependency identities for comparison.
-- [ ] 2.5 Retain or port POM/Ivy metadata recovery only as a warning-logged fallback for unmatched artifacts, including its Scala XML dependency or an equivalent parser.
+- [x] 2.1 Verify the selected sbt 2 baseline's API for Compile external-classpath entries and their attached module metadata with a focused compile/test spike.
+- [x] 2.2 Replace the upstream reflective virtual-file and Coursier-cache conversion with `fileConverter`-based conversion of Zinc `allLibraryDeps` entries.
+- [x] 2.3 Build a normalized Compile classpath artifact-path-to-module index that retains organization, module name, resolved revision, and cross-version information.
+- [x] 2.4 Map Zinc-used artifact paths through the classpath metadata index before constructing dependency identities for comparison.
+- [x] 2.5 Retain or port POM/Ivy metadata recovery only as a warning-logged fallback for unmatched artifacts, including its Scala XML dependency or an equivalent parser.
 
 ## 3. Diagnostic behavior
 
-- [ ] 3.1 Port and adapt the declared-versus-used set-difference logic for undeclared and unused compile dependencies.
-- [ ] 3.2 Preserve Compile, Provided, and Optional inclusion; Test and Runtime exclusion; Scala standard library exclusion; and independent module filters.
-- [ ] 3.3 Preserve failure behavior and actionable messages for both `*Test` tasks.
-- [ ] 3.4 Add focused unit coverage for cross-versioned module identities and unknown-artifact fallback behavior.
+- [x] 3.1 Port and adapt the declared-versus-used set-difference logic for undeclared and unused compile dependencies.
+- [x] 3.2 Preserve Compile, Provided, and Optional inclusion; Test and Runtime exclusion; Scala standard library exclusion; and independent module filters.
+- [x] 3.3 Preserve failure behavior and actionable messages for both `*Test` tasks.
+- [x] 3.4 Add focused unit coverage for cross-versioned module identities and unknown-artifact fallback behavior.
 
 ## 4. sbt 2 integration verification
 
