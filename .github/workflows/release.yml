@@ -38,7 +38,11 @@ jobs:
       - name: Run unit and scripted tests
         run: sbt -batch "; test; scripted"
       - name: Publish to Maven Central
-        run: sbt -batch ci-release
+        run: |
+          # sbt 2 reuses the server started by the test step, including its
+          # environment. Restart it so the release secrets below are visible.
+          sbt shutdownall
+          sbt -batch ci-release
         env:
           PGP_SECRET: ${{ secrets.PGP_SECRET }}
           PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
