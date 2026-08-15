@@ -7,6 +7,13 @@ organization := "me.mnedokushev"
 name         := "sbt2-explicit-dependencies"
 description  := "An independently maintained sbt 2-only port of sbt-explicit-dependencies"
 homepage     := Some(uri("https://github.com/grouzen/sbt2-explicit-dependencies"))
+scmInfo      := Some(
+  ScmInfo(
+    uri("https://github.com/grouzen/sbt2-explicit-dependencies"),
+    "scm:git:https://github.com/grouzen/sbt2-explicit-dependencies.git",
+    Some("scm:git:git@github.com:grouzen/sbt2-explicit-dependencies.git")
+  )
+)
 licenses     := List("Apache-2.0" -> uri("https://www.apache.org/licenses/LICENSE-2.0.txt"))
 developers   := List(
   Developer(
