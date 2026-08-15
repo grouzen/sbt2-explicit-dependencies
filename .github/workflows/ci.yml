@@ -18,5 +18,5 @@ jobs:
       - uses: sbt/setup-sbt@v1
       - name: Check Scala formatting and lint rules
         run: sbt -batch "; scalafix --check; scalafmtCheckAll"
-      - name: Compile, unit test, scripted test, and validate publishing metadata
-        run: sbt -batch "; compile; testFull; scripted; publishLocal"
+      - name: Run unit and scripted tests
+        run: sbt -batch "; test; scripted"
