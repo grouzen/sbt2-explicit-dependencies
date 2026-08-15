@@ -6,10 +6,11 @@
  */
 package explicitdeps
 
+import sbt.util.Logger
+
 import java.io.File
 import scala.util.control.NonFatal
 import scala.xml.XML
-import sbt.util.Logger
 
 final case class ScalaVersion(binary: String, full: String)
 

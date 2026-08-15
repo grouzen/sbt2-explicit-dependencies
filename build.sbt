@@ -20,6 +20,7 @@ developers := List(
 // This port deliberately targets the sbt 2 API only. SbtPlugin supplies the
 // Scala 3 version used by the selected sbt baseline.
 sbtVersion := "2.0.4"
+semanticdbEnabled := true
 
 libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "2.4.0"
 libraryDependencies += "org.scalameta" %% "munit" % "1.2.4" % Test

@@ -6,10 +6,11 @@
  */
 package explicitdeps
 
-import java.nio.file.Path
-import sbt.*
-import sbt.Keys.*
+import sbt.Keys._
+import sbt._
 import sbt.librarymanagement.{DependencyFilter, ModuleFilter}
+
+import java.nio.file.Path
 
 object ExplicitDepsPlugin extends AutoPlugin:
   trait Implicits:
