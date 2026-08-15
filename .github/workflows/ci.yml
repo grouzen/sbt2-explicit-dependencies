@@ -1,0 +1,20 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: sbt/setup-sbt@v1
+      - name: Compile, unit test, scripted test, and validate publishing metadata
+        run: sbt -batch "; compile; testFull; scripted; publishLocal"

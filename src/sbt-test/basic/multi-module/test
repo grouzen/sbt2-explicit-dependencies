@@ -1,0 +1,4 @@
+> core/undeclaredCompileDependenciesTest
+> core/unusedCompileDependenciesTest
+> tools/undeclaredCompileDependenciesTest
+> tools/unusedCompileDependenciesTest
