@@ -1,10 +1,11 @@
 /* Copyright 2026 Michael Nedokushev. Licensed under Apache-2.0. */
 package explicitdeps
 
-import java.nio.file.Files
 import munit.FunSuite
-import sbt.librarymanagement.{CrossVersion, ModuleID}
+import sbt.librarymanagement.{ CrossVersion, ModuleID }
 import sbt.util.Logger
+
+import java.nio.file.Files
 
 class LogicSuite extends FunSuite:
   private val log = Logger.Null
