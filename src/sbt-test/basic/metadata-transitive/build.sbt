@@ -1,2 +1,2 @@
-scalaVersion := "3.8.4"
+scalaVersion := sys.props("scala.version")
 libraryDependencies += "org.typelevel" %% "cats-free" % "2.13.0"

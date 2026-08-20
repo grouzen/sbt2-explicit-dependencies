@@ -2,24 +2,27 @@
  * Copyright 2018-2023 Chris Birchall
  * Copyright 2026 Michael Nedokushev
  * Licensed under the Apache License, Version 2.0.
- * Modified for this independent sbt 2-only port by Michael Nedokushev, 2026.
+ * Modified for this independent sbt port by Michael Nedokushev, 2026.
  */
 package explicitdeps
 
-import sbt.librarymanagement.{ Binary, DependencyFilter, Full, ModuleFilter, ModuleID }
+import sbt.librarymanagement.{ Binary, Full, ModuleFilter, ModuleID }
 import sbt.util.Logger
 
-object Logic:
-  def declared(libraryDeps: Seq[ModuleID], log: Logger): Set[Dependency] =
+object Logic {
+  def declared(libraryDeps: Seq[ModuleID], log: Logger): Set[Dependency] = {
     val result = libraryDeps
       .filter(isCompileDependency)
       .filterNot(isScalaLibrary)
       .map { module =>
-        Dependency(module.organization, module.name, module.revision, module.crossVersion.isInstanceOf[Binary | Full])
+        val crossVersion =
+          module.crossVersion.isInstanceOf[Binary] || module.crossVersion.isInstanceOf[Full]
+        Dependency(module.organization, module.name, module.revision, crossVersion)
       }
       .toSet
     log.debug(s"Declared dependencies:\n${result.mkString("  ", "\n  ", "")}")
     result
+  }
 
   def undeclared(
     project: String,
@@ -60,17 +63,20 @@ object Logic:
     problem: String,
     success: String,
     log: Logger
-  ): Set[Dependency] =
+  ): Set[Dependency] = {
     val result = candidates.filter(dep => filter(ModuleID(dep.organization, dep.name, dep.version)))
-    if result.nonEmpty then
+    if (result.nonEmpty) {
       log.warn(
         s"$project >>> $problem:\n - ${result.toList.sortBy(dep => s"${dep.organization} ${dep.name}").mkString("\n - ")}"
       )
-    else log.info(s"$project >>> $success")
+    } else log.info(s"$project >>> $success")
     result
+  }
 
   private def isScalaLibrary(module: ModuleID): Boolean      =
     Set("scala-library", "scalajs-library", "scala3-library").contains(module.name)
-  private def isCompileDependency(module: ModuleID): Boolean = module.configurations.forall(
-    _.split("; ?").exists(c => c.startsWith("compile") || c.startsWith("provided") || c.startsWith("optional"))
-  )
+  private def isCompileDependency(module: ModuleID): Boolean =
+    module.configurations.forall(
+      _.split("; ?").exists(c => c.startsWith("compile") || c.startsWith("provided") || c.startsWith("optional"))
+    )
+}
