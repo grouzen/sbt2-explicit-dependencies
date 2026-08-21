@@ -1,1 +1,1 @@
-scalaVersion := "3.8.4"
+scalaVersion := sys.props("scala.version")

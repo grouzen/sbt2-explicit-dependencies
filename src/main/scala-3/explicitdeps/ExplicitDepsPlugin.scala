@@ -2,17 +2,15 @@
  * Copyright 2018-2023 Chris Birchall
  * Copyright 2026 Michael Nedokushev
  * Licensed under the Apache License, Version 2.0.
- * Modified for this independent sbt 2-only port by Michael Nedokushev, 2026.
+ * Modified for this independent sbt port by Michael Nedokushev, 2026.
  */
 package explicitdeps
 
-import sbt.Keys._
-import sbt._
+import sbt.*
+import sbt.Keys.*
 import sbt.librarymanagement.{ DependencyFilter, ModuleFilter }
 
-import java.nio.file.Path
-
-object ExplicitDepsPlugin                     extends AutoPlugin:
+object ExplicitDepsPlugin extends AutoPlugin:
   trait Implicits:
     implicit val moduleFilterRemoveValue: Remove.Value[ModuleFilter, ModuleFilter] =
       new Remove.Value[ModuleFilter, ModuleFilter]:
@@ -73,12 +71,19 @@ object ExplicitDepsPlugin                     extends AutoPlugin:
         .map(Classpaths.moduleIdJsonKeyFormat.read)
         .map(module => converter.toPath(entry.data).normalize -> module)
     }.toMap
+
     analysis.relations.allLibraryDeps.flatMap { ref =>
       val path = converter.toPath(ref).normalize
       modulesByPath.get(path).map(module => dependencyFromModule(module, scala)) match
         case some @ Some(_) => some
         case None           =>
-          BoringStuff.jarFileToDependency(scala, log)(path.toFile).orElse {
+          val recovered = BoringStuff.jarFileToDependency(scala, log)(path.toFile)
+          recovered.foreach(_ =>
+            log.warn(
+              s"Recovered module metadata from cache files for unmatched artifact: ${path.toFile.getAbsolutePath}"
+            )
+          )
+          recovered.orElse {
             log.warn(s"Could not classify used compile artifact: $path")
             None
           }
@@ -102,7 +107,3 @@ object ExplicitDepsPlugin                     extends AutoPlugin:
         module.revision,
         module.crossVersion.isInstanceOf[sbt.librarymanagement.Binary | sbt.librarymanagement.Full]
       )
-object UndeclaredCompileDependenciesException extends FeedbackProvidedException:
-  override def toString = "Failing the build because undeclared dependencies were found"
-object UnusedCompileDependenciesException     extends FeedbackProvidedException:
-  override def toString = "Failing the build because unused dependencies were found"

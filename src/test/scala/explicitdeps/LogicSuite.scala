@@ -7,7 +7,7 @@ import sbt.util.Logger
 
 import java.nio.file.Files
 
-class LogicSuite extends FunSuite:
+class LogicSuite extends FunSuite {
   private val log = Logger.Null
 
   test("declared Scala-cross-versioned module retains its identity") {
@@ -20,3 +20,4 @@ class LogicSuite extends FunSuite:
     try assertEquals(BoringStuff.jarFileToDependency(ScalaVersion("3", "3.8.4"), log)(jar), None)
     finally jar.delete()
   }
+}

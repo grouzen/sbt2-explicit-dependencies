@@ -1,3 +1,4 @@
 import org.slf4j.LoggerFactory
-object Tools:
+object Tools {
   val logger = LoggerFactory.getLogger("tools")
+}

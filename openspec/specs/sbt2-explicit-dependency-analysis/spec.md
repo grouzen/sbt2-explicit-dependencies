@@ -1,11 +1,22 @@
-# sbt2-explicit-dependency-analysis Specification
+# sbt explicit dependency analysis Specification
 
 ## Purpose
 
-Provide sbt 2 projects with actionable diagnostics when declared compile
+Provide sbt 1 and sbt 2 projects with actionable diagnostics when declared compile
 dependencies do not match the external libraries their sources use to compile.
 
 ## Requirements
+
+### Requirement: Support sbt 1 and sbt 2
+The plugin SHALL be cross-published for the Scala 2.12-based sbt 1 plugin API and the Scala 3-based sbt 2 plugin API. Both variants SHALL expose the same public tasks, settings, filters, reports, and failure behavior.
+
+#### Scenario: Plugin loads in an sbt 1 build
+- **WHEN** an sbt 1 build adds the plugin using its documented coordinates
+- **THEN** sbt resolves the sbt 1 artifact and exposes the dependency diagnostic tasks
+
+#### Scenario: Plugin loads in an sbt 2 build
+- **WHEN** an sbt 2 build adds the plugin using its documented coordinates
+- **THEN** sbt resolves the sbt 2 artifact and exposes the dependency diagnostic tasks
 
 ### Requirement: Detect undeclared compile dependencies
 The plugin SHALL provide `undeclaredCompileDependencies`, which identifies external library modules used by the project's Compile sources but not declared as direct Compile-relevant `libraryDependencies`. It SHALL report the identified modules and return them to the build.
@@ -59,7 +70,7 @@ The analysis SHALL correctly compare Scala binary- and full-cross-versioned modu
 - **THEN** the diagnostic identifies it as the corresponding Scala-cross-versioned module
 
 ### Requirement: Diagnose from the compilation result
-The diagnostics SHALL derive used external libraries from the project's sbt 2 Compile analysis rather than from the full resolved dependency graph. If a used artifact cannot be associated with a module identity, the plugin SHALL emit a diagnostic log message and continue analysing other artifacts.
+The diagnostics SHALL derive used external libraries from the project's sbt Compile analysis rather than from the full resolved dependency graph. If a used artifact cannot be associated with a module identity, the plugin SHALL emit a diagnostic log message and continue analysing other artifacts.
 
 #### Scenario: Resolved but unused transitive dependency
 - **WHEN** a transitive dependency is resolved but no Compile source uses it

@@ -1,4 +1,5 @@
 import dotty.tools.dotc.Compiler
 
-object Main:
+object Main {
   val compilerClass = classOf[Compiler]
+}

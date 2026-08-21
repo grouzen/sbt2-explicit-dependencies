@@ -2,11 +2,12 @@
  * Copyright 2018-2023 Chris Birchall
  * Copyright 2026 Michael Nedokushev
  * Licensed under the Apache License, Version 2.0.
- * Modified for this independent sbt 2-only port by Michael Nedokushev, 2026.
+ * Modified for this independent sbt port by Michael Nedokushev, 2026.
  */
 package explicitdeps
 
-final case class Dependency(organization: String, name: String, version: String, crossVersion: Boolean):
+final case class Dependency(organization: String, name: String, version: String, crossVersion: Boolean) {
   override def toString: String =
-    if crossVersion then s"\"$organization\" %% \"$name\" % \"$version\""
-    else s"\"$organization\" % \"$name\" % \"$version\""
+    if (crossVersion) s""""$organization" %% "$name" % "$version""""
+    else s""""$organization" % "$name" % "$version""""
+}
