@@ -38,7 +38,7 @@ developers   := List(
 semanticdbEnabled := true
 
 libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "2.4.0"
-libraryDependencies += "org.scalameta"          %% "munit"     % "1.3.5" % Test
+libraryDependencies += "org.scalameta"          %% "munit"     % "1.3.6" % Test
 
 scriptedLaunchOpts ++= Seq(
   "-Xmx1024M",
